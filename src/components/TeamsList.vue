@@ -1,53 +1,40 @@
 <script>
-  import { onMounted, reactive } from '@vue/runtime-core'
-  import { mapGetters, mapActions } from 'vuex'
-  import storeTeams from '../store/teams.js'
-  import axios from 'axios'
-  
   export default {
     name: "TeamsList",
-    components: { },
   
-    setup () {
-      const state = reactive({
-        baseUrl: '',
-      })
-  
-      onMounted(() => {
-        storeTeams.dispatch('fetchTeams', state.baseUrl)
-        
-      })
-  
-      async function showTeam(url) {
-        try {
-          const { data } = await axios(url)
-          storeTeams.state.pokemonSelected.splice(0, 1, data)
-          storeTeams.state.showDetail = true
-        } catch (error) {
-          console.error(error)
+    data () {
+      return {
+        saveTeam: [],
+        teams: {
+          name: '',
+          pokemons: []
         }
       }
-      return {
-        state,
-        showTeam
-      }
-      
     },
-  
-    computed: {
-      ...mapGetters([
-        'teamsList',
-        'showDetails'
-      ])
-    },
+
+    created() {
+        this.saveTeam = (sessionStorage.getItem('teams')) ? JSON.parse((sessionStorage.getItem('teams'))) : [];
+      },
   
     methods: {
-      ...mapActions([
-        'fetchTeams',
-      ]),
+      createTeam() {
+        const savedTeam = (sessionStorage.getItem('teams')) ? JSON.parse((sessionStorage.getItem('teams'))) : [];
+        savedTeam.push(this.teams)
+        sessionStorage.setItem('teams', JSON.stringify(savedTeam))
+        this.saveTeam = (sessionStorage.getItem('teams')) ? JSON.parse((sessionStorage.getItem('teams'))) : [];
+      },
+
+      deleteTeam(index) {
+        const savedTeam = (sessionStorage.getItem('teams')) ? JSON.parse((sessionStorage.getItem('teams'))) : [];
+        savedTeam.splice(index, 1)
+        sessionStorage.setItem('teams', JSON.stringify(savedTeam))
+        this.saveTeam = (sessionStorage.getItem('teams')) ? JSON.parse((sessionStorage.getItem('teams'))) : [];
+      },
     }
-  };
-  </script>
+  }
+  
+
+</script>
 
 <template>
     <section>
@@ -58,14 +45,41 @@
               src="../assets/pokeball.png"
               alt="pokeball"
             />
-            <p>Create your team</p>
+            <p>Create a team</p>
           </div>
-            <form>
-                <input placeholder="New team's name" />
-                <button>Add you team</button>
+            <form v-on:submit.prevent="createTeam">
+                <input
+                  type="text"
+                  v-model="teams.name"
+                  placeholder="Insert your name" 
+                  >
+                <button type="submit">Add your team</button>
             </form>
-         </div>
-      </div>
+          </div>
+         
+          <div class="card" v-for="team in saveTeam" :key="team.index">
+          
+          <div class="id">
+            <img
+              src="../assets/pokeball.png"
+              alt="pokeball"
+            />
+            <p>
+              {{team.name}}'s Team
+            </p>
+          </div>
+          <RouterLink to="/myteam" team="{{ team }}" style="text-decoration: none">
+          <div class="team-image">
+            <img
+              src="../assets/pokeballteam.png"
+              alt="pokeballteam"
+            />
+            <p>Choose this team</p>
+          </div>
+          </RouterLink>
+          <p @click="deleteTeam(team.name)"><i class="far fa-times-circle"></i>  delete this team</p>
+          </div> 
+        </div>
     </section>
   </template>    
 
@@ -79,6 +93,7 @@ section {
   justify-content: center;
   overflow-y: auto;
   background: rgba(255, 255, 255, 0.281);
+  text-decoration: none;
   
 
   .team-list {
@@ -103,6 +118,35 @@ section {
       box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
       cursor: pointer;
 
+      .team-image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 40px;
+        margin-bottom: 30px;
+
+        img {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+      }
+      p {
+      text-align: right;
+      margin-right: 5px;
+      font-size: 12px;
+      color: #0a2351;
+      cursor: pointer;
+    }
+      
+      .team-image:hover {
+        animation: move 2s infinite alternate;
+      }
       .id {
         width: 100%;
         height: 15%;
@@ -124,6 +168,7 @@ section {
         }
       }
 
+
       .image {
         width: 100%;
         height: 90%;
@@ -131,15 +176,6 @@ section {
         display: flex;
         align-items: center;
         justify-content: center;
-
-        img {
-          width: 50%;
-          height: 50%;
-        }
-
-        img:hover {
-          animation: move 2s infinite alternate;
-        }
       }
       
       form {
@@ -151,13 +187,28 @@ section {
         margin-top: 50px;
 
         input {
-            background-color: rgba(255, 255, 255, 0.281);
+            outline: none;
+            background: none;
             text-align: center;
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         button {
+            height: 35px;
             cursor: pointer;
-        }
+            background-color: #B0C4DE;
+            color: #0a2351;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+            p { 
+              display: flex;
+              text-align: center;
+              justify-content: center;
+            }
+          }
       }
     }
   }
@@ -175,6 +226,38 @@ section {
      justify-content: center;
      .card {
        max-width: 18.5%;
+
+       form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+
+        input {
+            background-color: rgba(255, 255, 255, 0.281);
+            text-align: center;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        button {
+            height: 35px;
+            cursor: pointer;
+            background-color: #B0C4DE;
+            color: #0a2351;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+            p { 
+              display: flex;
+              text-align: center;
+              justify-content: center;
+            }
+          }
+      }
      }
    }
  }
@@ -187,6 +270,37 @@ section {
      .card {
        max-width: 31%;
        max-height: 45%;
+
+       form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 50px;
+
+        input {
+            background-color: rgba(255, 255, 255, 0.281);
+            text-align: center;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        button {
+            height: 35px;
+            cursor: pointer;
+            background-color: #B0C4DE;
+            color: #0a2351;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+
+            p { display: flex;
+                text-align: center;
+                justify-content: center;
+            }
+          }
+      }
      }
    }
  }

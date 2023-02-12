@@ -5,7 +5,7 @@
   import axios from 'axios'
   
   export default {
-    name: "PokemonList",
+    name: "PokemonSelection",
     components: { },
   
     setup () {

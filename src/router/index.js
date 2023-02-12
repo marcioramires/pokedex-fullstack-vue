@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TeamsView from '../views/TeamsView.vue'
-import SelectionView from '../views/SelectionView.vue'
+import myTeamView from '../views/myTeamView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,9 +17,9 @@ const router = createRouter({
       component: TeamsView
     },
     {
-      path: '/selection',
-      name: 'selection',
-      component: SelectionView
+      path: '/myteam',
+      name: 'myteam',
+      component: myTeamView
     },
   ]
 })

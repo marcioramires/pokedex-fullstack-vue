@@ -20,6 +20,7 @@ export default {
     })
 
     async function searchPoke() {
+      state.searchValue = state.searchValue.toLowerCase()
       if (state.searchValue.length !== 0) { 
           const searched = JSON.parse(localStorage.getItem('pokemons')) || []
           const pokeRegistered = searched.map(pokemon => pokemon.name)
@@ -50,10 +51,6 @@ export default {
         alert('not found')
       }
     }
-
-    setInterval(() => {
-      state.hour = new Date().toLocaleString().substr(11, 5);
-    });
 
     return {
       state,
