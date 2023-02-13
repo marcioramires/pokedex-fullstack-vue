@@ -31,14 +31,14 @@ const store = new Vuex.Store({
   },
   actions: {
     async fetchPokemons({ commit }, url) {
-      try {
-        const { data } = await axios(url);
-        commit("getPokemons", data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    try {
+      const { data } = await axios(url);
+      commit("getPokemons", data);
+    } catch (error) {
+      console.error(error);
+    }
   },
+},
   modules: {},
 });
 

@@ -28,14 +28,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(["fetchPokemons"]),
-    addPokemon(id) {
-      const pokemonId = id.split("/")[6];
+    ...mapActions(["fetchPokemons", "savedTeam"]),
+    addPokemon(name) {
+      // const pokemonId = id.split("/")[6];
       if (store.state.pokemonsTeam.length <= 5) {
         if (
-          store.state.pokemonsTeam.findIndex((pkm) => pkm === pokemonId) < 0
+          store.state.pokemonsTeam.findIndex((pkm) => pkm === name) < 0
         ) {
-          store.state.pokemonsTeam.push(pokemonId);
+          store.state.pokemonsTeam.push(name);
         } else {
           alert("Don't repeat a Pokemon!");
         }
@@ -43,7 +43,7 @@ export default {
         alert("Your team is complete!");
       }
     },
-  },
+    },
 };
 </script>
 
@@ -63,11 +63,11 @@ export default {
               '.svg'
             "
             alt="not available sorry"
-            @click="addPokemon(pokemon.url)"
+            @click="addPokemon(pokemon.name)"
           />
         </div>
         <div class="addButton">
-          <button @click="addPokemon(pokemon.url)">Add to your team</button>
+          <button @click="addPokemon(pokemon.name)">Add to your team</button>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["selectedTeamName", "selectedPokemonsTeam"]),
+    ...mapGetters(["selectedTeamName", "selectedPokemonsTeam", "pokemonList"]),
   },
 };
 </script>
@@ -29,6 +29,7 @@ export default {
         src="../assets/pokeballteam.png"
         alt="pokeballteam"
       />
+      <button>Save my team</button>
     </div>
     <div class="status">
       <div class="table-status">
@@ -37,12 +38,12 @@ export default {
         </div>
         <div class="progress-bar">
           <div class="items">
-            <p>#1 {{ selectedPokemonsTeam[0] }}</p>
-            <p>#2 {{ selectedPokemonsTeam[1] }}</p>
-            <p>#3 {{ selectedPokemonsTeam[2] }}</p>
-            <p>#4 {{ selectedPokemonsTeam[3] }}</p>
-            <p>#5 {{ selectedPokemonsTeam[4] }}</p>
-            <p>#6 {{ selectedPokemonsTeam[5] }}</p>
+            <p>1) {{ selectedPokemonsTeam[0] }}</p>
+            <p>2) {{ selectedPokemonsTeam[1] }}</p>
+            <p>3) {{ selectedPokemonsTeam[2] }}</p>
+            <p>4) {{ selectedPokemonsTeam[3] }}</p>
+            <p>5) {{ selectedPokemonsTeam[4] }}</p>
+            <p>6) {{ selectedPokemonsTeam[5] }}</p>
           </div>
         </div>
       </div>
@@ -57,7 +58,7 @@ section {
 
   .image {
     width: 100%;
-    height: 45%;
+    height: 40%;
     position: relative;
 
     display: flex;
@@ -89,7 +90,7 @@ section {
 
   .status {
     width: 100%;
-    height: 55%;
+    height: 60%;
 
     display: flex;
     align-items: center;
@@ -126,7 +127,7 @@ section {
 
         .items {
           height: 100%;
-          width: 30%;
+          width: 50%;
           padding-left: 10px;
 
           display: flex;
@@ -135,33 +136,6 @@ section {
 
           p {
             font-size: 0.9rem;
-          }
-        }
-
-        .values {
-          width: 70%;
-          height: 100%;
-
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-around;
-
-          .types {
-            width: 100%;
-            height: 10%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            p {
-              margin: 10px;
-              text-transform: capitalize;
-            }
-          }
-
-          p {
-            font-size: 0.8rem;
           }
         }
       }
