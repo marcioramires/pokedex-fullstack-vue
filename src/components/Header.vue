@@ -2,7 +2,7 @@
 import { onMounted, reactive } from "@vue/runtime-core";
 import { mapGetters, mapActions } from "vuex";
 import { RouterLink } from "vue-router";
-import storePokemons from "../stores/PokemonStore.js";
+import store from "../stores/PokemonStore.js";
 import axios from "axios";
 
 export default {
@@ -15,7 +15,7 @@ export default {
     });
 
     onMounted(() => {
-      storePokemons.dispatch("fetchPokemons", state.baseUrl);
+      store.dispatch("fetchPokemons", state.baseUrl);
     });
 
     async function searchPoke() {
@@ -30,8 +30,8 @@ export default {
             const { data } = await axios(
               `https://pokeapi.co/api/v2/pokemon/${state.searchValue}`
             );
-            storePokemons.state.pokemonSelected.splice(0, 1, data);
-            storePokemons.state.showDetail = true;
+            store.state.pokemonSelected.splice(0, 1, data);
+            store.state.showDetail = true;
             searched.push(data);
             localStorage.setItem("pokemons", JSON.stringify(searched));
             state.searchValue = "";
@@ -42,8 +42,8 @@ export default {
         } else {
           searched.forEach((pokemon) => {
             if (pokemon.name === state.searchValue) {
-              storePokemons.state.pokemonSelected.splice(0, 1, pokemon);
-              storePokemons.state.showDetail = true;
+              store.state.pokemonSelected.splice(0, 1, pokemon);
+              store.state.showDetail = true;
               state.searchValue = "";
             }
           });
@@ -68,12 +68,12 @@ export default {
 
     nextPage: () => {
       store.dispatch("fetchPokemons", store.state.nextPage);
-      storePokemons.state.showDetail = false;
+      store.state.showDetail = false;
     },
 
     prevPage: () => {
       store.dispatch("fetchPokemons", store.state.prevPage);
-      storePokemons.state.showDetail = false;
+      store.state.showDetail = false;
     },
   },
 };

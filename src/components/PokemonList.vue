@@ -1,7 +1,7 @@
 <script>
   import { onMounted, reactive } from '@vue/runtime-core'
   import { mapGetters, mapActions } from 'vuex'
-  import storePokemons from '../stores/PokemonStore.js'
+  import store from '../stores/PokemonStore.js'
   import axios from 'axios'
   
   export default {
@@ -14,15 +14,15 @@
       })
   
       onMounted(() => {
-        storePokemons.dispatch('fetchPokemons', state.baseUrl)
+        store.dispatch('fetchPokemons', state.baseUrl)
         
       })
   
       async function showPokemon(url) {
         try {
           const { data } = await axios(url)
-          storePokemons.state.pokemonSelected.splice(0, 1, data)
-          storePokemons.state.showDetail = true
+          store.state.pokemonSelected.splice(0, 1, data)
+          store.state.showDetail = true
         } catch (error) {
           console.error(error)
         }

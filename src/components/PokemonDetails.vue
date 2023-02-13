@@ -1,6 +1,6 @@
 <script>
 import { mapGetters } from "vuex";
-import storePokemons from "../stores/PokemonStore.js";
+import store from "../stores/PokemonStore.js";
 
 export default {
   name: "PokemonDetails",
@@ -8,7 +8,7 @@ export default {
   
   setup() {
     function closeDetail() {
-      storePokemons.state.showDetail = false;
+      store.state.showDetail = false;
     }
 
     return {
