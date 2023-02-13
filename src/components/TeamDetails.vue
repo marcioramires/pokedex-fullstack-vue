@@ -1,47 +1,53 @@
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TeamDetails",
   components: {},
-  
-  setup() {
-    function closeDetail() {
 
+  methods: {
+    teste() {
+      console.log(this.selectedTeamName)
+      console.log(this.selectedPokemonsTeam)
     }
+  },
 
-    return {
-      closeDetail,
-    };
+  computed: {
+    ...mapGetters(["selectedTeamName", "selectedPokemonsTeam"]),
   },
 };
 </script>
 
 <template>
-    <section>
-      <div class="image">
-        <RouterLink to="/teams"><p><i class="far fa-times-circle"></i></p></RouterLink>
-        <img
+  <section>
+    <div class="image">
+      <RouterLink to="/teams"
+        ><p><i class="far fa-times-circle"></i></p
+      ></RouterLink>
+      <img
+        @click="teste()"
         src="../assets/pokeballteam.png"
-              alt="pokeballteam"
-        />
-      </div>
-      <div class="status">
-        <div class="table-status">
-          <div class="title">
-            <p>'s Team</p>
-          </div>
-          <div class="progress-bar">
-            <div class="items">
-              <p>#1</p>
-              <p>#2</p>
-              <p>#3</p>
-              <p>#4</p>
-              <p>#5</p>
-              <p>#6</p>
-            </div>
+        alt="pokeballteam"
+      />
+    </div>
+    <div class="status">
+      <div class="table-status">
+        <div class="title">
+          <p>{{ selectedTeamName }}'s Team</p>
+        </div>
+        <div class="progress-bar">
+          <div class="items">
+            <p>#1 {{ selectedPokemonsTeam[0] }}</p>
+            <p>#2 {{ selectedPokemonsTeam[1] }}</p>
+            <p>#3 {{ selectedPokemonsTeam[2] }}</p>
+            <p>#4 {{ selectedPokemonsTeam[3] }}</p>
+            <p>#5 {{ selectedPokemonsTeam[4] }}</p>
+            <p>#6 {{ selectedPokemonsTeam[5] }}</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -64,7 +70,7 @@ section {
       top: 10px;
       right: 10px;
       font-size: 1.3rem;
-      color: #72A0C1;
+      color: #72a0c1;
       cursor: pointer;
     }
 
@@ -98,7 +104,7 @@ section {
       .title {
         width: 100%;
         height: 15%;
-        background: #72A0C1;
+        background: #72a0c1;
         text-transform: capitalize;
 
         display: flex;
@@ -114,7 +120,7 @@ section {
       .progress-bar {
         width: 100%;
         height: 85%;
-        background: #B0C4DE;
+        background: #b0c4de;
 
         display: flex;
 

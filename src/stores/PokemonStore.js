@@ -8,6 +8,8 @@ const store = new Vuex.Store({
     nextPage: "",
     prevPage: "",
     showDetail: false,
+    teamName: "",
+    pokemonsTeam: [],
   },
   mutations: {
     getPokemons: (state, data) => {
@@ -22,6 +24,10 @@ const store = new Vuex.Store({
     showSelected: (state) => state.pokemonSelected,
 
     showDetails: (state) => state.showDetail,
+
+    selectedTeamName: (state) => state.teamName,
+
+    selectedPokemonsTeam: (state) => state.pokemonsTeam,
   },
   actions: {
     async fetchPokemons({ commit }, url) {

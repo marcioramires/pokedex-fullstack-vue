@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from "./store/pokemons.js";
+import storePokemons from "./stores/PokemonStore.js";
 
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/js/all.js";
@@ -10,6 +10,6 @@ const app = createApp(App)
 
 app.use(router)
 
-app.use(store)
+app.use(storePokemons)
 
 app.mount('#app')

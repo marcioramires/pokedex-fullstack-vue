@@ -19,7 +19,8 @@ const router = createRouter({
     {
       path: '/myteam',
       name: 'myteam',
-      component: myTeamView
+      component: myTeamView,
+      query: {}
     },
   ]
 })

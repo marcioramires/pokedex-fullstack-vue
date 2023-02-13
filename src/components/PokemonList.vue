@@ -1,7 +1,7 @@
 <script>
   import { onMounted, reactive } from '@vue/runtime-core'
   import { mapGetters, mapActions } from 'vuex'
-  import storePokemons from '../store/pokemons.js'
+  import storePokemons from '../stores/PokemonStore.js'
   import axios from 'axios'
   
   export default {
