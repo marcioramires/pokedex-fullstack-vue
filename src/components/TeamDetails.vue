@@ -1,14 +1,31 @@
 <script>
 import { mapGetters } from "vuex";
 
+import store from "../stores/PokemonStore.js";
+import { api } from "../services/api.js";
+
 export default {
   name: "TeamDetails",
   components: {},
 
   methods: {
-    teste() {
-      console.log(this.selectedTeamName)
-      console.log(this.selectedPokemonsTeam)
+    saveMyTeam() {
+      const savedTeam = sessionStorage.getItem("teams")
+        ? JSON.parse(sessionStorage.getItem("teams"))
+        : [];
+
+      savedTeam.push({name: store.state.teamName, pokemons: store.state.pokemonsTeam});
+
+      sessionStorage.setItem("teams", JSON.stringify(savedTeam));
+
+      async () => {
+        const { data } = await api.post("poke_teams", {
+            name: store.state.teamName,
+            pokemons: store.state.pokemonsTeam
+          })    
+      }
+      this.$router.push({ path: '/teams'})
+      console.log(savedTeam)
     }
   },
 
@@ -29,21 +46,21 @@ export default {
         src="../assets/pokeballteam.png"
         alt="pokeballteam"
       />
-      <button>Save my team</button>
+      <button @click="saveMyTeam()">Save</button>
     </div>
     <div class="status">
       <div class="table-status">
         <div class="title">
           <p>{{ selectedTeamName }}'s Team</p>
         </div>
-        <div class="progress-bar">
+        <div class="card">
           <div class="items">
-            <p>1) {{ selectedPokemonsTeam[0] }}</p>
-            <p>2) {{ selectedPokemonsTeam[1] }}</p>
-            <p>3) {{ selectedPokemonsTeam[2] }}</p>
-            <p>4) {{ selectedPokemonsTeam[3] }}</p>
-            <p>5) {{ selectedPokemonsTeam[4] }}</p>
-            <p>6) {{ selectedPokemonsTeam[5] }}</p>
+            <p>{{ selectedPokemonsTeam[0] }}</p>
+            <p>{{ selectedPokemonsTeam[1] }}</p>
+            <p>{{ selectedPokemonsTeam[2] }}</p>
+            <p>{{ selectedPokemonsTeam[3] }}</p>
+            <p>{{ selectedPokemonsTeam[4] }}</p>
+            <p>{{ selectedPokemonsTeam[5] }}</p>
           </div>
         </div>
       </div>
@@ -81,9 +98,13 @@ section {
     }
 
     button {
-      margin-top: 20px;
-      display: flex;
-      align-items: right;
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      background-color: #b0c4de;
+      color: #0a2351;
       cursor: pointer;
     }
   }
@@ -118,7 +139,7 @@ section {
         }
       }
 
-      .progress-bar {
+      .card {
         width: 100%;
         height: 85%;
         background: #b0c4de;
@@ -127,15 +148,16 @@ section {
 
         .items {
           height: 100%;
-          width: 50%;
+          width: 100%;
           padding-left: 10px;
 
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          align-items: center;
 
           p {
-            font-size: 0.9rem;
+            font-size: 1rem;
           }
         }
       }

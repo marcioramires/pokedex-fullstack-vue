@@ -9,7 +9,6 @@ export default {
       saveTeam: [],
       teams: {
         name: "",
-        pokemons: [],
       },
     };
   },
@@ -22,14 +21,9 @@ export default {
 
   methods: {
     createTeam() {
-      const savedTeam = sessionStorage.getItem("teams")
-        ? JSON.parse(sessionStorage.getItem("teams"))
-        : [];
-      savedTeam.push(this.teams);
-      sessionStorage.setItem("teams", JSON.stringify(savedTeam));
-      this.saveTeam = sessionStorage.getItem("teams")
-        ? JSON.parse(sessionStorage.getItem("teams"))
-        : [];
+      store.state.teamName = this.teams.name
+      store.state.pokemonsTeam = []
+      this.$router.push({ path: '/myteam'})
     },
 
     deleteTeam(name) {

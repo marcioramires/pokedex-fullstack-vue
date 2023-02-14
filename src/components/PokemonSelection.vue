@@ -30,7 +30,6 @@ export default {
   methods: {
     ...mapActions(["fetchPokemons", "savedTeam"]),
     addPokemon(name) {
-      // const pokemonId = id.split("/")[6];
       if (store.state.pokemonsTeam.length <= 5) {
         if (
           store.state.pokemonsTeam.findIndex((pkm) => pkm === name) < 0

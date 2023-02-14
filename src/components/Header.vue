@@ -21,7 +21,7 @@ export default {
     async function searchPoke() {
       state.searchValue = state.searchValue.toLowerCase();
       if (state.searchValue.length !== 0) {
-        const searched = JSON.parse(localStorage.getItem("pokemons")) || [];
+        const searched = JSON.parse(sessionStorage.getItem("pokemons")) || [];
         const pokeRegistered = searched.map((pokemon) => pokemon.name);
         const pokeVerify = pokeRegistered.indexOf(state.searchValue);
 
@@ -33,7 +33,7 @@ export default {
             store.state.pokemonSelected.splice(0, 1, data);
             store.state.showDetail = true;
             searched.push(data);
-            localStorage.setItem("pokemons", JSON.stringify(searched));
+            sessionStorage.setItem("pokemons", JSON.stringify(searched));
             state.searchValue = "";
           } catch (error) {
             alert("not found");
