@@ -1,9 +1,9 @@
 <script>
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
 
 export default {
-    name: "App",
-    components: { },
+  name: "App",
+  components: {},
 };
 </script>
 
@@ -11,7 +11,6 @@ export default {
   <div class="app">
     <RouterView />
   </div>
-  
 </template>
 
 <style lang="scss">
@@ -29,7 +28,7 @@ export default {
   height: 100vh;
   overflow: hidden;
   background: #dbd9df;
-  background-image: './assets/background.jpg';
+  background-image: "./assets/background.jpg";
 
   display: flex;
   align-items: center;

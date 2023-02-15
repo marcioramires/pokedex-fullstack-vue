@@ -9,24 +9,21 @@ export default {
   components: {},
 
   methods: {
-    saveMyTeam() {
-      const savedTeam = sessionStorage.getItem("teams")
-        ? JSON.parse(sessionStorage.getItem("teams"))
-        : [];
+    async saveMyTeam() {
+      await api
+        .post("poketeam", {
+          name: store.state.teamName,
+          team: store.state.pokemonsTeam,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      savedTeam.push({name: store.state.teamName, pokemons: store.state.pokemonsTeam});
-
-      sessionStorage.setItem("teams", JSON.stringify(savedTeam));
-
-      async () => {
-        const { data } = await api.post("poke_teams", {
-            name: store.state.teamName,
-            pokemons: store.state.pokemonsTeam
-          })    
-      }
-      this.$router.push({ path: '/teams'})
-      console.log(savedTeam)
-    }
+      this.$router.push({ path: "/teams" });
+    },
   },
 
   computed: {

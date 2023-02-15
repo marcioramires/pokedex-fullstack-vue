@@ -31,9 +31,7 @@ export default {
     ...mapActions(["fetchPokemons", "savedTeam"]),
     addPokemon(name) {
       if (store.state.pokemonsTeam.length <= 5) {
-        if (
-          store.state.pokemonsTeam.findIndex((pkm) => pkm === name) < 0
-        ) {
+        if (store.state.pokemonsTeam.findIndex((pkm) => pkm === name) < 0) {
           store.state.pokemonsTeam.push(name);
         } else {
           alert("Don't repeat a Pokemon!");
@@ -42,7 +40,7 @@ export default {
         alert("Your team is complete!");
       }
     },
-    },
+  },
 };
 </script>
 

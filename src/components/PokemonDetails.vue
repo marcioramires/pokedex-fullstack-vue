@@ -5,7 +5,7 @@ import store from "../stores/PokemonStore.js";
 export default {
   name: "PokemonDetails",
   components: {},
-  
+
   setup() {
     function closeDetail() {
       store.state.showDetail = false;
@@ -23,75 +23,75 @@ export default {
 </script>
 
 <template>
-    <section v-if="showDetails">
-      <div class="image">
-        <p @click="closeDetail"><i class="far fa-times-circle"></i></p>
-        <img
-          :src="showSelected[0].sprites.other.home.front_default"
-          alt="not available sorry"
-        />
-      </div>
-      <div class="status">
-        <div class="table-status">
-          <div class="title">
-            <p>Nº {{ showSelected[0].id }}</p>
-            <p>{{ showSelected[0].name }}</p>
+  <section v-if="showDetails">
+    <div class="image">
+      <p @click="closeDetail"><i class="far fa-times-circle"></i></p>
+      <img
+        :src="showSelected[0].sprites.other.home.front_default"
+        alt="not available sorry"
+      />
+    </div>
+    <div class="status">
+      <div class="table-status">
+        <div class="title">
+          <p>Nº {{ showSelected[0].id }}</p>
+          <p>{{ showSelected[0].name }}</p>
+        </div>
+        <div class="progress-bar">
+          <div class="items">
+            <p>type:</p>
+            <p>hp:</p>
+            <p>attack:</p>
+            <p>defense:</p>
+            <p>sp-atk:</p>
+            <p>sp-def:</p>
+            <p>speed:</p>
           </div>
-          <div class="progress-bar">
-            <div class="items">
-              <p>type:</p>
-              <p>hp:</p>
-              <p>attack:</p>
-              <p>defense:</p>
-              <p>sp-atk:</p>
-              <p>sp-def:</p>
-              <p>speed:</p>
+          <div class="values">
+            <div class="types">
+              <p
+                class="poke-type"
+                v-for="value in showSelected[0].types"
+                :key="value"
+              >
+                {{ value.type.name }}
+              </p>
             </div>
-            <div class="values">
-              <div class="types">
-                <p
-                  class="poke-type"
-                  v-for="value in showSelected[0].types"
-                  :key="value"
-                >
-                  {{ value.type.name }}
-                </p>
-              </div>
-              <progress
-                :value="showSelected[0].stats[0].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[0].base_stat"
-              ></progress>
-              <progress
-                :value="showSelected[0].stats[1].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[1].base_stat"
-              ></progress>
-              <progress
-                :value="showSelected[0].stats[2].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[2].base_stat"
-              ></progress>
-              <progress
-                :value="showSelected[0].stats[3].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[3].base_stat"
-              ></progress>
-              <progress
-                :value="showSelected[0].stats[4].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[4].base_stat"
-              ></progress>
-              <progress
-                :value="showSelected[0].stats[5].base_stat"
-                max="100"
-                :data-content="showSelected[0].stats[5].base_stat"
-              ></progress>
-            </div>
+            <progress
+              :value="showSelected[0].stats[0].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[0].base_stat"
+            ></progress>
+            <progress
+              :value="showSelected[0].stats[1].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[1].base_stat"
+            ></progress>
+            <progress
+              :value="showSelected[0].stats[2].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[2].base_stat"
+            ></progress>
+            <progress
+              :value="showSelected[0].stats[3].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[3].base_stat"
+            ></progress>
+            <progress
+              :value="showSelected[0].stats[4].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[4].base_stat"
+            ></progress>
+            <progress
+              :value="showSelected[0].stats[5].base_stat"
+              max="100"
+              :data-content="showSelected[0].stats[5].base_stat"
+            ></progress>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -113,7 +113,7 @@ section {
       top: 10px;
       right: 10px;
       font-size: 1.3rem;
-      color: #72A0C1;
+      color: #72a0c1;
       cursor: pointer;
     }
 
@@ -140,7 +140,7 @@ section {
       .title {
         width: 100%;
         height: 15%;
-        background: #72A0C1;
+        background: #72a0c1;
         text-transform: capitalize;
 
         display: flex;
@@ -156,7 +156,7 @@ section {
       .progress-bar {
         width: 100%;
         height: 85%;
-        background: #B0C4DE;
+        background: #b0c4de;
 
         display: flex;
 

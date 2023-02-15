@@ -1,5 +1,6 @@
 <script>
-import store from '../stores/PokemonStore'
+import store from "../stores/PokemonStore";
+import { api } from "../services/api.js";
 
 export default {
   name: "TeamsList",
@@ -13,36 +14,44 @@ export default {
     };
   },
 
-  created() {
-    this.saveTeam = sessionStorage.getItem("teams")
-      ? JSON.parse(sessionStorage.getItem("teams"))
-      : [];
+  async created() {
+    await api
+      .get("poketeam")
+      .then((res) => {
+        this.saveTeam = res.data;
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   methods: {
     createTeam() {
-      store.state.teamName = this.teams.name
-      store.state.pokemonsTeam = []
-      this.$router.push({ path: '/myteam'})
+      store.state.teamName = this.teams.name;
+      store.state.pokemonsTeam = [];
+      this.$router.push({ path: "/myteam" });
     },
 
-    deleteTeam(name) {
-      const savedTeam = sessionStorage.getItem("teams")
-        ? JSON.parse(sessionStorage.getItem("teams"))
-        : [];
-      const index = savedTeam.findIndex(team => team.name === name)
-      savedTeam.splice(index, 1);
-      sessionStorage.setItem("teams", JSON.stringify(savedTeam));
-      this.saveTeam = sessionStorage.getItem("teams")
-        ? JSON.parse(sessionStorage.getItem("teams"))
-        : [];
+    async deleteTeam(name) {
+      const index = this.saveTeam.findIndex((team) => team.name === name);
+      const id = this.saveTeam[index].id;
+
+      await api
+        .delete(`/poketeam/${id}`)
+        .then(() => {
+          this.saveTeam.splice(index, 1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     openTeam(team) {
-      store.state.teamName = team.name
-      store.state.pokemonsTeam = team.pokemons
-      this.$router.push({ path: '/myteam'})
-    } 
+      store.state.teamName = team.name;
+      store.state.pokemonsTeam = team.team;
+      this.$router.push({ path: "/myteam" });
+    },
   },
 };
 </script>
@@ -147,7 +156,7 @@ section {
       }
 
       .teamDelete {
-        margin-bottom: 20px;;
+        margin-bottom: 20px;
       }
 
       .team-image:hover {

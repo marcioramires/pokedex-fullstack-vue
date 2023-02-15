@@ -1,79 +1,81 @@
 <script>
-  import { onMounted, reactive } from '@vue/runtime-core'
-  import { mapGetters, mapActions } from 'vuex'
-  import store from '../stores/PokemonStore.js'
-  import axios from 'axios'
-  
-  export default {
-    name: "PokemonList",
-    components: { },
-  
-    setup () {
-      const state = reactive({
-        baseUrl: 'https://pokeapi.co/api/v2/pokemon/?limit=21&offset=0',
-      })
-  
-      onMounted(() => {
-        store.dispatch('fetchPokemons', state.baseUrl)
-        
-      })
-  
-      async function showPokemon(url) {
-        try {
-          const { data } = await axios(url)
-          store.state.pokemonSelected.splice(0, 1, data)
-          store.state.showDetail = true
-        } catch (error) {
-          console.error(error)
-        }
+import { onMounted, reactive } from "@vue/runtime-core";
+import { mapGetters, mapActions } from "vuex";
+import store from "../stores/PokemonStore.js";
+import axios from "axios";
+
+export default {
+  name: "PokemonList",
+  components: {},
+
+  setup() {
+    const state = reactive({
+      baseUrl: "https://pokeapi.co/api/v2/pokemon/?limit=21&offset=0",
+    });
+
+    onMounted(() => {
+      store.dispatch("fetchPokemons", state.baseUrl);
+    });
+
+    async function showPokemon(url) {
+      try {
+        const { data } = await axios(url);
+        store.state.pokemonSelected.splice(0, 1, data);
+        store.state.showDetail = true;
+      } catch (error) {
+        console.error(error);
       }
-      return {
-        state,
-        showPokemon
-      }
-      
-    },
-  
-    computed: {
-      ...mapGetters([
-        'pokemonList',
-        'showDetails'
-      ])
-    },
-  
-    methods: {
-      ...mapActions([
-        'fetchPokemons',
-      ]),
     }
-  };
+    return {
+      state,
+      showPokemon,
+    };
+  },
+
+  computed: {
+    ...mapGetters(["pokemonList", "showDetails"]),
+  },
+
+  methods: {
+    ...mapActions(["fetchPokemons"]),
+  },
+};
 </script>
 
 <template>
-    <section>
-      <div class="poke-list" >
-         <div class="card" v-for="pokemon in pokemonList" :key="pokemon.id" @click="showPokemon(pokemon.url)">
-          <div class="id">
-            <img
-              src="../assets/pokeball.png"
-              alt="pokeball"
-            />
-            <p>{{pokemon.name}}</p>
-          </div>
-          <div class="image">
-            <img :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/`+pokemon.url.split('/')[6]+'.svg'" alt="not available sorry">
-          </div>
+  <section>
+    <div class="poke-list">
+      <div
+        class="card"
+        v-for="pokemon in pokemonList"
+        :key="pokemon.id"
+        @click="showPokemon(pokemon.url)"
+      >
+        <div class="id">
+          <img src="../assets/pokeball.png" alt="pokeball" />
+          <p>{{ pokemon.name }}</p>
+        </div>
+        <div class="image">
+          <img
+            :src="
+              `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/` +
+              pokemon.url.split('/')[6] +
+              '.svg'
+            "
+            alt="not available sorry"
+          />
         </div>
       </div>
-    </section>
-</template>    
+    </div>
+  </section>
+</template>
 
 <style lang="scss" scoped>
 section {
   width: 100%;
   height: 100%;
 
-  display: flex;  
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -106,7 +108,7 @@ section {
         display: flex;
         align-items: center;
 
-        background: #B0C4DE;
+        background: #b0c4de;
 
         p {
           color: #0a2351;
@@ -147,25 +149,25 @@ section {
 }
 
 @media only screen and (max-width: 1050px) {
- section {
-   .poke-list {
-     justify-content: center;
-     .card {
-       max-width: 18.5%;
-     }
-   }
- }
+  section {
+    .poke-list {
+      justify-content: center;
+      .card {
+        max-width: 18.5%;
+      }
+    }
+  }
 }
 
 @media only screen and (max-width: 850px) {
- section {
-   .poke-list {
-     justify-content: center;
-     .card {
-       max-width: 31%;
-       max-height: 45%;
-     }
-   }
- }
+  section {
+    .poke-list {
+      justify-content: center;
+      .card {
+        max-width: 31%;
+        max-height: 45%;
+      }
+    }
+  }
 }
 </style>
