@@ -10,22 +10,33 @@ export default {
 
   methods: {
     async saveMyTeam() {
+
+      const convertObjectToArray = (obj) => {
+        const arrayValue = [];
+
+        Object.keys(obj).forEach((key) => {
+          arrayValue.push({ key, value: obj[key] });
+        });
+        return arrayValue;
+      }
+
+      const newTeamName = store.state.teamName;
+      const newTeam = Array.from(store.state.pokemonsTeam);
+
       await api
         .post("poketeam", {
-          name: store.state.teamName,
-          team: store.state.pokemonsTeam,
+          name: newTeamName,
+          team: newTeam,
         })
         .then((res) => {
-          console.log(res.data);
+          this.$router.push({ path: "/teams" });
         })
         .catch((error) => {
+          this.$router.push({ path: "/teams" });
           console.log(error);
-        });
-
-      this.$router.push({ path: "/teams" });
+        });      
     },
   },
-
   computed: {
     ...mapGetters(["selectedTeamName", "selectedPokemonsTeam", "pokemonList"]),
   },

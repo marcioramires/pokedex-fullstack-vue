@@ -51,7 +51,6 @@ export default {
       } else {
         alert("not found");
       }
-      this.$router.push({ path: "/" });
     }
 
     return {

@@ -19,7 +19,6 @@ export default {
       .get("poketeam")
       .then((res) => {
         this.saveTeam = res.data;
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
